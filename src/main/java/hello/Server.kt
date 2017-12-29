@@ -1,16 +1,25 @@
 package hello
 
+import com.google.gson.Gson
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.templ.FreeMarkerTemplateEngine
+import java.net.URLDecoder
+import io.vertx.groovy.ext.web.RoutingContext_GroovyExtension.getBodyAsJson
+import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.handler.BodyHandler
+
 
 class Server : io.vertx.core.AbstractVerticle()  {
     override fun start() {
 
         var router = Router.router(vertx)
 
+        // This body handler will be called for all routes
+        router.route().handler(BodyHandler.create())
+
         //handles static files in static folder
-        router.route("/static/*").handler(StaticHandler.create().setWebRoot("static"))
+        router.route("/static/*").handler(StaticHandler.create().setWebRoot("static").setCachingEnabled(false).setCacheEntryTimeout(1000).setMaxAgeSeconds(1))
 
         // In order to use a template we first need to create an engine
         var engine = FreeMarkerTemplateEngine.create()
@@ -30,9 +39,17 @@ class Server : io.vertx.core.AbstractVerticle()  {
             })
         })
 
-        /*router.route("/").handler({ routingContext ->
-            routingContext.response().putHeader("content-type", "text/html").end("Hello World!")
-        })*/
+        router.post().handler({ routingContext ->
+
+            val code = routingContext.request().getParam("code")
+            var codeInstance = Code(code)
+
+            val gson = Gson()
+            val json = gson.toJson(codeInstance)
+
+            codeInstance = gson.fromJson(json, hello.Code::class.java)
+            routingContext.response().putHeader("content-type", "text/html").end(codeInstance.code)
+        })
 
 
 

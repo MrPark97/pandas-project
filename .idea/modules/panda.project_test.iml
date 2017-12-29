@@ -39,6 +39,7 @@
     <orderEntry type="library" name="Gradle: io.vertx:vertx-web:3.5.0" level="project" />
     <orderEntry type="library" name="Gradle: io.vertx:vertx-web-client:3.5.0" level="project" />
     <orderEntry type="library" name="Gradle: io.vertx:vertx-web-templ-freemarker:3.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.51" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-common:4.1.15.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-buffer:4.1.15.Final" level="project" />
