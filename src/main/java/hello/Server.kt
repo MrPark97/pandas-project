@@ -1,13 +1,19 @@
 package hello
 
 import com.google.gson.Gson
+import io.vertx.core.MultiMap
+import io.vertx.core.buffer.Buffer
+import io.vertx.core.json.Json
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.templ.FreeMarkerTemplateEngine
 import java.net.URLDecoder
 import io.vertx.groovy.ext.web.RoutingContext_GroovyExtension.getBodyAsJson
 import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.client.WebClient
+import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.ext.web.handler.BodyHandler
+import io.vertx.kotlin.ext.web.client.WebClientOptions
 
 
 class Server : io.vertx.core.AbstractVerticle()  {
@@ -42,12 +48,23 @@ class Server : io.vertx.core.AbstractVerticle()  {
         router.post().handler({ routingContext ->
 
             val code = routingContext.request().getParam("code")
-            var codeInstance = Code(code)
+            val input = routingContext.request().getParam("input")
+            var codeInstance = Code(code, input)
 
-            val gson = Gson()
-            val json = gson.toJson(codeInstance)
+            //val gson = Gson()
+            //val json = gson.toJson(codeInstance)
 
-            codeInstance = gson.fromJson(json, hello.Code::class.java)
+            var options = WebClientOptions(userAgent = "Pandas/6.6.6")
+            var client = WebClient.create(vertx, options)
+            client.post(8000, "localhost", "/").sendJson(codeInstance, { ar ->
+                if (ar.succeeded()) {
+                    // Ok
+                    var response = ar.result()
+                    println("Got HTTP response with status ${response.bodyAsString()}")
+                }
+            })
+
+            //codeInstance = gson.fromJson(json, hello.Code::class.java)
             routingContext.response().putHeader("content-type", "text/html").end(codeInstance.code)
         })
 

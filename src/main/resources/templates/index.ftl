@@ -53,11 +53,11 @@
 
 </div>
 <div id="input-ide" class="column is-3">
-  <paper-textarea label="write the input data here" rows="3">
+  <paper-textarea label="write the input data here" rows="3" id="input-text">
   </paper-textarea>
 
 
-  <div class="field is-pulled-right" id="file-input-ide">
+  <!-- <div class="field is-pulled-right" id="file-input-ide">
     <div class="file is-info">
       <label class="file-label">
         <input class="file-input" type="file" name="resume">
@@ -71,7 +71,7 @@
         </span>
       </label>
     </div>
-  </div>
+  </div> -->
 </div>
 </div>
 

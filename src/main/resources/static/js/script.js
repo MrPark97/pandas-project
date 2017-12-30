@@ -4,7 +4,12 @@ request12 = new ajaxLolRequest();
 function compileIt() {
 	request12.open('POST', '/', true);
 	request12.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	request12.send("code="+encodeURIComponent(editor.getSession().getDocument().getValue()));
+	
+	var input = document.getElementById("input-text").value;
+	if(typeof input === "undefined") {
+		input = "";
+	}
+	request12.send("code="+encodeURIComponent(editor.getSession().getDocument().getValue())+"&input="+encodeURIComponent(input));
 }
 		
 request12.onreadystatechange = function() {
