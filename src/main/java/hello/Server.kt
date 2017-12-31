@@ -1,6 +1,8 @@
 package hello
 
 import com.google.gson.Gson
+import io.vertx.core.AsyncResult
+import io.vertx.core.Handler
 import io.vertx.core.MultiMap
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.json.Json
@@ -10,6 +12,7 @@ import io.vertx.ext.web.templ.FreeMarkerTemplateEngine
 import java.net.URLDecoder
 import io.vertx.groovy.ext.web.RoutingContext_GroovyExtension.getBodyAsJson
 import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
 import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.ext.web.handler.BodyHandler
@@ -17,7 +20,9 @@ import io.vertx.kotlin.ext.web.client.WebClientOptions
 
 
 class Server : io.vertx.core.AbstractVerticle()  {
+
     override fun start() {
+
 
         var router = Router.router(vertx)
 
@@ -56,16 +61,31 @@ class Server : io.vertx.core.AbstractVerticle()  {
 
             var options = WebClientOptions(userAgent = "Pandas/6.6.6")
             var client = WebClient.create(vertx, options)
+
             client.post(8000, "localhost", "/").sendJson(codeInstance, { ar ->
                 if (ar.succeeded()) {
                     // Ok
                     var response = ar.result()
-                    println("Got HTTP response with status ${response.bodyAsString()}")
+
+
+                    /*var compilationResult = Json.decodeValue(Buffer.buffer(answer), CompilationResult::class.java)
+                    println(compilationResult.output)
+                    println(compilationResult.error)
+                    for (element in compilationResult.warnings) {
+                        println(element)
+                    }*/
+
+                    val answer = response.bodyAsString()
+                    println(answer)
+
+                    routingContext.response().putHeader("content-type", "application/json").end(answer)
+
                 }
             })
 
+
             //codeInstance = gson.fromJson(json, hello.Code::class.java)
-            routingContext.response().putHeader("content-type", "text/html").end(codeInstance.code)
+
         })
 
 
