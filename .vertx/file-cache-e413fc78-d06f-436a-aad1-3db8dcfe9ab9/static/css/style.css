@@ -1,0 +1,113 @@
+@font-face {
+	src: url('../fonts/CHINESETAKEAWAY.ttf');
+	font-family: Chinese;
+}
+
+.Chinese {
+	font-family: Chinese;
+}
+
+html {
+	background-image: url('../img/background.jpg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.navbar-brand {
+	font-family: Chinese;
+	font-size: 1.2rem;
+}
+
+footer {
+	background-color: rgba(255,255,255,0.6) !important;
+	position: fixed !important;
+	bottom: 0px !important;
+	width: 100%;
+	padding: 1.5rem 1.5rem 1.5rem !important;
+}
+
+#panda-ide {
+	margin: 0 auto;
+	height: 400px;
+}
+
+#input-ide {
+	height: 200px;
+	background: #FBE9E7;
+	opacity: 0.8;
+}
+
+#advertisement-ide {
+	background: black;
+	height: 200px;
+}
+
+#output-ide {
+	background: #F4511E;
+	opacity: 0.8;
+}
+
+#my-ide {
+	margin-top: 4rem;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+#file-input-ide {
+	margin: 5px;
+}
+
+#run-ide {
+	background: #BF360C;
+	padding-top: 23px;
+	opacity: 0.8;
+}
+
+#run-button-ide {
+	color: #E8F5E9;
+	border-color: #E8F5E9;
+}
+
+#run-button-ide:hover {
+	background: #43A047;
+}
+
+#loading-transparent {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,0.8);
+	z-index: 999;
+	display: none;
+}
+
+#loading {
+	height: 0px;
+	width: 0px;
+	transition: 1s;
+	position: fixed;
+	left: 50%;
+	margin-left: -100px;
+	top: 50%;
+	margin-top: -100px;
+	z-index: 1000;
+	border-radius: 25px;
+}
+
+#compilation-output {
+}
+
+.compilation-error {
+	color: #F44336;
+}
+
+.compilation-warning {
+	color: #FF6F00;
+}
